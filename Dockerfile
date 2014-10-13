@@ -17,6 +17,15 @@ RUN chmod +x /usr/lib/cgi-bin/shockme.cgi
 
 RUN a2enmod cgid
 
+# Install vulnerable bash
+RUN apt-get install -y build-essential wget
+RUN wget https://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz && \
+    tar zxvf bash-4.3.tar.gz && \
+    cd bash-4.3 && \
+    ./configure && \
+    make && \
+    make install
+
 EXPOSE 80
 
 ENTRYPOINT ["/usr/sbin/apache2"]
